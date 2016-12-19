@@ -32,11 +32,6 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
             TeacherService = (function () {
                 function TeacherService(http) {
                     this.http = http;
-                    this.getTEst = function () { return [
-                        { id: 1, name: 'BMW' },
-                        { id: 2, name: 'Suzuki' },
-                        { id: 3, name: 'Volkswagen' }
-                    ]; };
                     this.headers = new http_1.Headers();
                     this.headers.append('Accept', 'application/json');
                     this.headers.append('Content-Type', 'application/json');
@@ -53,6 +48,30 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                     parametrers.set("id", id);
                     return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher', { search: parametrers })
                         .map(function (res) { return res.json(); });
+                };
+                TeacherService.prototype.addTeache = function (body) {
+                    var bodyString = JSON.stringify(body); // Stringify payload
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+                    var options = new base_request_options_1.RequestOptions({ headers: headers }); // Create a request option
+                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', bodyString, options) // ...using post request
+                        .map(function (res) { return res.json(); }) // ...and calling .json() on the response to return data
+                        .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); }); //...errors if any
+                };
+                TeacherService.prototype.AddTeacherek = function () {
+                    var toAdd = JSON.stringify({
+                        address: "Rzeszow 2",
+                        login: "józek",
+                        name: "józek",
+                        password: "józek",
+                        surname: "józek",
+                        isEducator: "true"
+                    });
+                    var params = 'json=' + toAdd;
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', params, { headers: this.headers })
+                        .map(function (response) { return response.json(); })
+                        .catch(this.handleError);
                 };
                 TeacherService.prototype.addTeacher = function (teacher) {
                     var headers = new http_1.Headers();

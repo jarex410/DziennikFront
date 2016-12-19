@@ -28,6 +28,12 @@ System.register(['angular2/core', "./services/teacher.service", "angular2/http"]
                 function AppComponent(_teacherService) {
                     this._teacherService = _teacherService;
                 }
+                AppComponent.prototype.clicked = function (event) {
+                    this.teachers = [];
+                };
+                AppComponent.prototype.function = function (event) {
+                    this.getTeachers();
+                };
                 AppComponent.prototype.ngOnInit = function () {
                     this.getTeachers();
                 };
@@ -36,10 +42,18 @@ System.register(['angular2/core', "./services/teacher.service", "angular2/http"]
                     this._teacherService.getTechers()
                         .subscribe(function (data) { return _this.teachers = data; }, function (error) { return console.log(error); }, function () { return console.log('Get all Items complete'); });
                 };
+                AppComponent.prototype.submitForm = function () {
+                    this._teacherService.addTeache(this.teacher);
+                };
+                AppComponent.prototype.postTeacherek = function () {
+                    var _this = this;
+                    this._teacherService.AddTeacherek()
+                        .subscribe(function (data) { return _this.teacher = data; }, function (error) { return alert(error); }, function () { return console.log("POST POSZEDL"); });
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n    <ul>\n      <li *ngFor=\"#teacher of teachers\">{{teacher.name}}</li>\n    </ul>\n  ",
+                        template: "\n<table class=\"table\">\n  <tr>\n  <td>IMIE</td><td>NAZWISKO</td>\n</tr>\n      <tr *ngFor=\"#teacher of teachers\">\n      <td>{{ teacher.name }}  </td><td>  {{teacher.surname}}</td>\n      </tr>\n  </table>\n  <button (click)=\"function($event)\"> JEDEN</button>\n    <button (click)=\"clicked($event)\"> DWA</button>\n    <button (click)=\"postTeacherek()\"> 3333</button>\n\n",
                         providers: [http_1.HTTP_PROVIDERS, teacher_service_1.TeacherService]
                     }), 
                     __metadata('design:paramtypes', [teacher_service_1.TeacherService])

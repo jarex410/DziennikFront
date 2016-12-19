@@ -25,11 +25,6 @@ export class TeacherService {
   }
 
 
-  getTEst = () => [
-    { id: 1, name: 'BMW' },
-    { id: 2, name: 'Suzuki' },
-    { id: 3, name: 'Volkswagen' }
-  ];
     getTechers():Observable<Teacher[]> {
       return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher')
           .map((response: Response) => <Teacher[]>response.json())
@@ -44,8 +39,38 @@ export class TeacherService {
         {search: parametrers})
         .map(res => res.json());
     }
+    addTeache (body: Object): Observable<Teacher[]> {
+        let bodyString = JSON.stringify(body); // Stringify payload
+        let headers      = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+        let options       = new RequestOptions({ headers: headers }); // Create a request option
 
-  addTeacher(teacher:Teacher) {
+        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', bodyString, options) // ...using post request
+            .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
+    }
+
+
+     AddTeacherek (){
+        let toAdd = JSON.stringify({
+                address: "Rzeszow 2",
+                login: "józek",
+                name: "józek",
+                password: "józek",
+                surname: "józek",
+                isEducator: "true"
+            }
+        );
+        var params ='json='+toAdd;
+        var headers = new Headers();
+        headers.append('Content-Type','application/x-www-form-urlencoded');
+
+        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', params, { headers: this.headers })
+            .map((response: Response) => <Teacher>response.json())
+            .catch(this.handleError);
+    }
+
+
+    addTeacher(teacher:Teacher) {
 
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
