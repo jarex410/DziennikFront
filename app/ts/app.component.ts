@@ -1,67 +1,29 @@
-import {Component} from 'angular2/core';
+import {Component, Directive} from 'angular2/core';
 import {TeacherService} from "./services/teacher.service";
 import {Teacher} from "./model/dziennik";
 import {HTTP_PROVIDERS} from "angular2/http";
 import {OnInit} from "angular2/src/core/linker/interfaces";
+import {LoginComponent} from './components/login.component';
+import {PrivateComponent} from './components/private.component';
+import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {TeacherComponent} from "./components/teacher.component";
+import {ClassComponent} from "./components/class.component";
+
 
 
 @Component({
     selector: 'my-app',
+    directives: [LoginComponent, ROUTER_DIRECTIVES],
+    providers: [HTTP_PROVIDERS],
     template: `
-<table class="table">
-  <tr>
-  <td>IMIE</td><td>NAZWISKO</td>
-</tr>
-      <tr *ngFor="#teacher of teachers">
-      <td>{{ teacher.name }}  </td><td>  {{teacher.surname}}</td>
-      </tr>
-  </table>
-  <button (click)="function($event)"> JEDEN</button>
-    <button (click)="clicked($event)"> DWA</button>
-    <button (click)="postTeacherek()"> 3333</button>
-
-`,
-    providers: [HTTP_PROVIDERS, TeacherService]
+            <router-outlet></router-outlet>
+        `
 })
+@RouteConfig([
+    { path: '/home', name: 'Home', component: PrivateComponent},
+    { path: '/login', name: 'Login', component: LoginComponent , useAsDefault:true },
+    { path: '/teacher', name: 'Teacher', component: TeacherComponent },
+    { path: '/class', name: 'Class', component: ClassComponent }
+])
 
-export class AppComponent {
-
-    clicked(event) {
-        this.teachers = [];
-    }
-
-    function (event) {
-        this.getTeachers();
-
-    }
-
-    teachers: Teacher[];
-
-    teacher: Teacher;
-
-    constructor(private _teacherService: TeacherService) {
-    }
-
-    ngOnInit() {
-        this.getTeachers();
-    }
-
-    getTeachers(): void {
-        this._teacherService.getTechers()
-            .subscribe((data: Teacher[]) => this.teachers = data,
-                error => console.log(error),
-                () => console.log('Get all Items complete'));
-    }
-
-    submitForm() {
-
-        this._teacherService.addTeache(this.teacher)
-
-    }
-    postTeacherek(){
-        this._teacherService.AddTeacherek()
-            .subscribe((data:Teacher)=> this.teacher = data,
-            error => alert(error),
-                ()=>console.log("POST POSZEDL"))
-    }
-}
+export class AppComponent {}

@@ -1,4 +1,4 @@
-System.register(['angular2/core', "./services/teacher.service", "angular2/http"], function(exports_1, context_1) {
+System.register(['angular2/core', "angular2/http", './components/login.component', './components/private.component', 'angular2/router', "./components/teacher.component", "./components/class.component"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,53 +10,49 @@ System.register(['angular2/core', "./services/teacher.service", "angular2/http"]
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, teacher_service_1, http_1;
+    var core_1, http_1, login_component_1, private_component_1, router_1, teacher_component_1, class_component_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (teacher_service_1_1) {
-                teacher_service_1 = teacher_service_1_1;
-            },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (login_component_1_1) {
+                login_component_1 = login_component_1_1;
+            },
+            function (private_component_1_1) {
+                private_component_1 = private_component_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (teacher_component_1_1) {
+                teacher_component_1 = teacher_component_1_1;
+            },
+            function (class_component_1_1) {
+                class_component_1 = class_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
-                function AppComponent(_teacherService) {
-                    this._teacherService = _teacherService;
+                function AppComponent() {
                 }
-                AppComponent.prototype.clicked = function (event) {
-                    this.teachers = [];
-                };
-                AppComponent.prototype.function = function (event) {
-                    this.getTeachers();
-                };
-                AppComponent.prototype.ngOnInit = function () {
-                    this.getTeachers();
-                };
-                AppComponent.prototype.getTeachers = function () {
-                    var _this = this;
-                    this._teacherService.getTechers()
-                        .subscribe(function (data) { return _this.teachers = data; }, function (error) { return console.log(error); }, function () { return console.log('Get all Items complete'); });
-                };
-                AppComponent.prototype.submitForm = function () {
-                    this._teacherService.addTeache(this.teacher);
-                };
-                AppComponent.prototype.postTeacherek = function () {
-                    var _this = this;
-                    this._teacherService.AddTeacherek()
-                        .subscribe(function (data) { return _this.teacher = data; }, function (error) { return alert(error); }, function () { return console.log("POST POSZEDL"); });
-                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n<table class=\"table\">\n  <tr>\n  <td>IMIE</td><td>NAZWISKO</td>\n</tr>\n      <tr *ngFor=\"#teacher of teachers\">\n      <td>{{ teacher.name }}  </td><td>  {{teacher.surname}}</td>\n      </tr>\n  </table>\n  <button (click)=\"function($event)\"> JEDEN</button>\n    <button (click)=\"clicked($event)\"> DWA</button>\n    <button (click)=\"postTeacherek()\"> 3333</button>\n\n",
-                        providers: [http_1.HTTP_PROVIDERS, teacher_service_1.TeacherService]
-                    }), 
-                    __metadata('design:paramtypes', [teacher_service_1.TeacherService])
+                        directives: [login_component_1.LoginComponent, router_1.ROUTER_DIRECTIVES],
+                        providers: [http_1.HTTP_PROVIDERS],
+                        template: "\n            <router-outlet></router-outlet>\n        "
+                    }),
+                    router_1.RouteConfig([
+                        { path: '/home', name: 'Home', component: private_component_1.PrivateComponent },
+                        { path: '/login', name: 'Login', component: login_component_1.LoginComponent, useAsDefault: true },
+                        { path: '/teacher', name: 'Teacher', component: teacher_component_1.TeacherComponent },
+                        { path: '/class', name: 'Class', component: class_component_1.ClassComponent }
+                    ]), 
+                    __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
             }());

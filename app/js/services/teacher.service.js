@@ -43,12 +43,17 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
-                TeacherService.prototype.getTeacher = function (id) {
+                TeacherService.prototype.getTeacher1 = function (id) {
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("id", id);
                     return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher', { search: parametrers })
                         .map(function (res) { return res.json(); });
-                };
+                }; // leci po ??
+                TeacherService.prototype.getTeacher = function (id) {
+                    var parametrers = new http_1.URLSearchParams();
+                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
+                        .map(function (res) { return res.json(); });
+                }; //leci po urlu
                 TeacherService.prototype.addTeache = function (body) {
                     var bodyString = JSON.stringify(body); // Stringify payload
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
@@ -60,17 +65,16 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                 TeacherService.prototype.AddTeacherek = function () {
                     var toAdd = JSON.stringify({
                         address: "Rzeszow 2",
-                        login: "józek",
-                        name: "józek",
-                        password: "józek",
-                        surname: "józek",
+                        login: "zzzz",
+                        name: "zzzz",
+                        password: "zzzz",
+                        surname: "zzzzz",
                         isEducator: "true"
                     });
                     var params = 'json=' + toAdd;
                     var headers = new http_1.Headers();
-                    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', params, { headers: this.headers })
-                        .map(function (response) { return response.json(); })
+                    headers.append('Content-Type', 'application/json');
+                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', toAdd, { headers: headers })
                         .catch(this.handleError);
                 };
                 TeacherService.prototype.addTeacher = function (teacher) {
@@ -81,19 +85,6 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                         newTeacher.set("name", teacher.name)
                     */
                     return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', JSON.stringify(teacher), headers);
-                };
-                TeacherService.prototype.mapPersons = function (response) {
-                    // The response of the API has a results
-                    // property with the actual results
-                    return response.json().results.map(this.toTeacher);
-                };
-                TeacherService.prototype.toTeacher = function (r) {
-                    var teacher = ({
-                        id: r.id,
-                        name: r.name,
-                    });
-                    console.log('Parsed person:', teacher);
-                    return teacher;
                 };
                 // to avoid breaking the rest of our app
                 // I extract the id from the person url

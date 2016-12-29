@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Http, URLSearchParams, Headers} from 'angular2/http';
+import {Http,Headers,URLSearchParams} from 'angular2/http'
 import {Teacher} from "../model/dziennik";
 import {Response} from "angular2/src/http/static_response";
 import 'rxjs/add/operator/map'
@@ -31,14 +31,22 @@ export class TeacherService {
           .catch(this.handleError);
     }
 
-    getTeacher(id:string) {
+    getTeacher1(id:string) {
       let parametrers = new URLSearchParams();
       parametrers.set("id", id);
 
       return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher',
         {search: parametrers})
         .map(res => res.json());
-    }
+    } // leci po ??
+
+
+    getTeacher(id:string) {
+        let parametrers = new URLSearchParams();
+        return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
+            .map(res => res.json());
+    }  //leci po urlu
+
     addTeache (body: Object): Observable<Teacher[]> {
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers      = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
@@ -53,19 +61,18 @@ export class TeacherService {
      AddTeacherek (){
         let toAdd = JSON.stringify({
                 address: "Rzeszow 2",
-                login: "józek",
-                name: "józek",
-                password: "józek",
-                surname: "józek",
+                login: "zzzz",
+                name: "zzzz",
+                password: "zzzz",
+                surname: "zzzzz",
                 isEducator: "true"
             }
         );
         var params ='json='+toAdd;
         var headers = new Headers();
-        headers.append('Content-Type','application/x-www-form-urlencoded');
+        headers.append('Content-Type','application/json');
 
-        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', params, { headers: this.headers })
-            .map((response: Response) => <Teacher>response.json())
+        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', toAdd, { headers: headers })
             .catch(this.handleError);
     }
 
@@ -86,20 +93,6 @@ export class TeacherService {
   }
 
 
-    mapPersons(response:Response): Teacher[]{
-        // The response of the API has a results
-        // property with the actual results
-        return response.json().results.map(this.toTeacher)
-    }
-
-    toTeacher(r:any): Teacher{
-        let teacher = <Teacher>({
-            id: r.id,
-            name: r.name,
-        });
-        console.log('Parsed person:', teacher);
-        return teacher;
-    }
 
 // to avoid breaking the rest of our app
 // I extract the id from the person url
