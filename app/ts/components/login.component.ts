@@ -35,6 +35,7 @@ import {Router} from "angular2/src/router/router";
             </div>
         </div>
         {{currentUser.password}}
+        {{currentUser.teacher}}
     	`
 })
 

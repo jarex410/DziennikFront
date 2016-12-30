@@ -1,4 +1,4 @@
-System.register(["../services/teacher.service", 'angular2/core', "../services/authentication.service", "angular2/src/router/router", "../services/main.service"], function(exports_1, context_1) {
+System.register(["../services/teacher.service", "angular2/core", "../services/authentication.service", "angular2/src/router/router", "../services/main.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -36,22 +36,12 @@ System.register(["../services/teacher.service", 'angular2/core', "../services/au
                     this._authenticationServie = _authenticationServie;
                     this._router = _router;
                     this.mainService = mainService;
-                    this.classID = "aaa";
+                    this.teacherID = "1";
                     this.teacher = this.getTeacher;
-                    this.mainService.addID("DUPA TEACHER");
-                    console.log("KONSTRUKTOR TEACHER");
                 }
-                TeacherComponent.prototype.clicked = function (event) {
-                    this.teachers = [];
-                };
-                TeacherComponent.prototype.function = function (event) {
-                    this.getTeachers();
-                };
-                TeacherComponent.prototype.goToClassComponent = function () {
-                    this._router.navigate(['Class']);
-                };
                 TeacherComponent.prototype.ngOnInit = function () {
                     this.getTeachers();
+                    this.getSubjectsByTeacher();
                 };
                 TeacherComponent.prototype.getTeachers = function () {
                     var _this = this;
@@ -71,10 +61,39 @@ System.register(["../services/teacher.service", 'angular2/core', "../services/au
                     this._authenticationServie.getUser("panJacek")
                         .subscribe(function (data) { return _this.teacher = data; }, function (error) { return alert(error); }, function () { return console.log("GET POSZEDL"); });
                 };
+                TeacherComponent.prototype.getSubjectList = function (teacherID) {
+                    var _this = this;
+                    this._teacherService.getSubjectsByTeacherId(teacherID)
+                        .subscribe(function (data) { return _this.subjectList = data; }, function (error) { return alert(error); }, function () { return console.log("LISTA PRZEDMIOTOW UZYTKOWNIKA"); });
+                };
+                TeacherComponent.prototype.getSubjectsByTeacher = function () {
+                    console.log("getSUBJECT AJAX");
+                    this.getSubjectList(this.teacherID);
+                    console.log("getSUBJECT");
+                    this.tableData = this.subjectList;
+                };
+                TeacherComponent.prototype.getTeachers2 = function () {
+                    console.log("getTeachers");
+                    this.tableData = this.teachers;
+                };
+                TeacherComponent.prototype.getSubjectById = function (subjectID) {
+                    var _this = this;
+                    this.resetValues();
+                    this._teacherService.getSubjectById(subjectID)
+                        .subscribe(function (data) { return _this.subject = data; }, function (error) { return alert(error); }, function () { return console.log("PRZEDMIOT PO ID"); });
+                };
+                TeacherComponent.prototype.getStudentListByClassId = function (classID) {
+                    var _this = this;
+                    this._teacherService.getStudentsByClassId(classID)
+                        .subscribe(function (data) { return _this.studentList = data; }, function (error) { return alert(error); }, function () { return console.log("LISTA UCZNIOW KLASY" + _this.studentList.toString()); });
+                };
+                TeacherComponent.prototype.resetValues = function () {
+                    this.studentList = [];
+                };
                 TeacherComponent = __decorate([
                     core_1.Component({
                         selector: 'teacher',
-                        template: "\n<table class=\"table\">\n  <tr>\n  <td>PRZEDMIOT</td>\n</tr>\n<tr *ngFor=\"#subject of teacher.subjectList\">\n     <td (click)=\"goToClassComponent()\" *ngFor=\"#class of subject.schoolClasses\"><div>{{class.name}}</div></td>\n\n</tr>\n\n{{classID}}\n<klasa classID={{clasValue}}></klasa>\n  </table>\n  <button (click)=\"function($event)\"> JEDEN</button>\n    <button (click)=\"clicked($event)\"> DWA</button>\n    <button (click)=\"postTeacherek()\"> 3333</button>\n    <button (click)=\"getTeacher()\"> GET TEACHEREK</button>\n{{teacher.subjecList}}\n",
+                        template: "\n<table class=\"table\">\n  <tr>\n  <td>PRZEDMIOT</td>\n</tr>\n<tr *ngFor=\"#object of tableData\">\n{{object.id}}\n     <td>{{object.name}}</td>\n          <button (click)=\"getSubjectById([object.id])\">{{object.id}}</button>\n     <!--<td (click)=\"goToClassComponent()\" *ngFor=\"#class of subject.schoolClasses\"><div>{{class.name}}</div></td>-->\n\n</tr>\n<div *ngIf=\"[subject] != 0\">\n<H1>{{subject.name}}</H1>\n    <td *ngFor=\"#schoolClass of subject.schoolClasses\">\n            {{schoolClass.name}}\n            <button (click)=\"getStudentListByClassId([schoolClass.id])\">{{schoolClass.id}}</button>\n    </td>\n</div>\n\n <div *ngIf=\"[studentList] != 0  && [studentList].length > 0\">\n            <tr *ngFor=\"#student of studentList\">\n            <H1>UCZEN : </H1>\n            <div *ngIf=\"[student] != 0\">\n            <tr><td> IMIE: {{student.login}} \t  </td><td>  \tNAZWISKO : \t{{student.surname}}</td></tr>      \n                </div>\n</div>\n\n\n  </table>\n  <button (click)=\"getSubjectsByTeacher()\"> PRZEDMIOTY</button>\n    <button (click)=\"getTeachers2()\"> Nauczyciele</button>\n    <button (click)=\"postTeacherek()\"> POST NAUCZYCIELA</button>\n\n",
                         providers: [teacher_service_1.TeacherService, authentication_service_1.AuthenticationService, main_service_1.MainService]
                     }), 
                     __metadata('design:paramtypes', [teacher_service_1.TeacherService, authentication_service_1.AuthenticationService, router_1.Router, main_service_1.MainService])

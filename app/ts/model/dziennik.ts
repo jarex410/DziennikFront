@@ -13,6 +13,7 @@ export interface Teacher {
 
 export interface Student {
     login:string;
+    name:string
     surname:string;
     grades: Grade[];
 }

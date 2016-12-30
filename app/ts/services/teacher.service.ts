@@ -1,11 +1,12 @@
 import {Injectable} from 'angular2/core';
 import {Http,Headers,URLSearchParams} from 'angular2/http'
-import {Teacher} from "../model/dziennik";
+import {Teacher, Subject, Student} from "../model/dziennik";
 import {Response} from "angular2/src/http/static_response";
 import 'rxjs/add/operator/map'
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import {RequestOptions} from "angular2/src/http/base_request_options";
+import {map} from "rxjs/operator/map";
 
 
 @Injectable()
@@ -31,31 +32,11 @@ export class TeacherService {
           .catch(this.handleError);
     }
 
-    getTeacher1(id:string) {
-      let parametrers = new URLSearchParams();
-      parametrers.set("id", id);
-
-      return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher',
-        {search: parametrers})
-        .map(res => res.json());
-    } // leci po ??
-
-
     getTeacher(id:string) {
         let parametrers = new URLSearchParams();
         return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
             .map(res => res.json());
     }  //leci po urlu
-
-    addTeache (body: Object): Observable<Teacher[]> {
-        let bodyString = JSON.stringify(body); // Stringify payload
-        let headers      = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-        let options       = new RequestOptions({ headers: headers }); // Create a request option
-
-        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', bodyString, options) // ...using post request
-            .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
-    }
 
 
      AddTeacherek (){
@@ -94,6 +75,34 @@ export class TeacherService {
 
 
 
+
+    getSubjectById(id:string) {
+        return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject/' + id)
+            .map(res => res.json());
+    }  //leci po urlu
+
+
+    getSubjectsByTeacherId(teacherID):Observable<Subject[]> {
+        let parametrers = new URLSearchParams();
+        parametrers.set("teacherID", teacherID);
+
+        return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject',
+            {search: parametrers})
+            .map((response: Response) => <Subject[]>response.json())
+            .catch(this.handleError);
+    }
+
+    getStudentsByClassId(classID):Observable<Student[]> {
+        let parametrers = new URLSearchParams();
+        parametrers.set("classID", classID);
+
+        return this.http.get('http://dziennikelektroniczny.herokuapp.com/student',
+            {search: parametrers})
+            .map((response: Response) => <Student[]>response.json())
+            .catch(this.handleError);
+    }
+
+
 // to avoid breaking the rest of our app
 // I extract the id from the person url
     extractId(personData:any){
@@ -105,5 +114,7 @@ export class TeacherService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
+
+
 
 }

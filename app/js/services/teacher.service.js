@@ -43,25 +43,11 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
-                TeacherService.prototype.getTeacher1 = function (id) {
-                    var parametrers = new http_1.URLSearchParams();
-                    parametrers.set("id", id);
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher', { search: parametrers })
-                        .map(function (res) { return res.json(); });
-                }; // leci po ??
                 TeacherService.prototype.getTeacher = function (id) {
                     var parametrers = new http_1.URLSearchParams();
                     return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
                         .map(function (res) { return res.json(); });
                 }; //leci po urlu
-                TeacherService.prototype.addTeache = function (body) {
-                    var bodyString = JSON.stringify(body); // Stringify payload
-                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-                    var options = new base_request_options_1.RequestOptions({ headers: headers }); // Create a request option
-                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', bodyString, options) // ...using post request
-                        .map(function (res) { return res.json(); }) // ...and calling .json() on the response to return data
-                        .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); }); //...errors if any
-                };
                 TeacherService.prototype.AddTeacherek = function () {
                     var toAdd = JSON.stringify({
                         address: "Rzeszow 2",
@@ -85,6 +71,24 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                         newTeacher.set("name", teacher.name)
                     */
                     return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', JSON.stringify(teacher), headers);
+                };
+                TeacherService.prototype.getSubjectById = function (id) {
+                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject/' + id)
+                        .map(function (res) { return res.json(); });
+                }; //leci po urlu
+                TeacherService.prototype.getSubjectsByTeacherId = function (teacherID) {
+                    var parametrers = new http_1.URLSearchParams();
+                    parametrers.set("teacherID", teacherID);
+                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject', { search: parametrers })
+                        .map(function (response) { return response.json(); })
+                        .catch(this.handleError);
+                };
+                TeacherService.prototype.getStudentsByClassId = function (classID) {
+                    var parametrers = new http_1.URLSearchParams();
+                    parametrers.set("classID", classID);
+                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/student', { search: parametrers })
+                        .map(function (response) { return response.json(); })
+                        .catch(this.handleError);
                 };
                 // to avoid breaking the rest of our app
                 // I extract the id from the person url

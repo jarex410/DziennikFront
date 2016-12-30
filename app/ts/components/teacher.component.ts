@@ -1,9 +1,8 @@
 import {TeacherService} from "../services/teacher.service";
-import {Teacher, Subject, SchoolClass, Student} from "../model/dziennik";
-import {Component} from 'angular2/core';
+import {Teacher, Subject, Student, User} from "../model/dziennik";
+import {Component} from "angular2/core";
 import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "angular2/src/router/router";
-import {Input} from "angular2/src/core/metadata";
 import {MainService} from "../services/main.service";
 
 
@@ -14,57 +13,65 @@ import {MainService} from "../services/main.service";
   <tr>
   <td>PRZEDMIOT</td>
 </tr>
-<tr *ngFor="#subject of teacher.subjectList">
-     <td (click)="goToClassComponent()" *ngFor="#class of subject.schoolClasses"><div>{{class.name}}</div></td>
+<tr *ngFor="#object of tableData">
+{{object.id}}
+     <td>{{object.name}}</td>
+          <button (click)="getSubjectById([object.id])">{{object.id}}</button>
+     <!--<td (click)="goToClassComponent()" *ngFor="#class of subject.schoolClasses"><div>{{class.name}}</div></td>-->
 
 </tr>
+<div *ngIf="[subject] != 0">
+<H1>{{subject.name}}</H1>
+    <td *ngFor="#schoolClass of subject.schoolClasses">
+            {{schoolClass.name}}
+            <button (click)="getStudentListByClassId([schoolClass.id])">{{schoolClass.id}}</button>
+    </td>
+</div>
 
-{{classID}}
-<klasa classID={{clasValue}}></klasa>
+ <div *ngIf="[studentList] != 0  && [studentList].length > 0">
+            <tr *ngFor="#student of studentList">
+            <H1>UCZEN : </H1>
+            <div *ngIf="[student] != 0">
+            <tr><td> IMIE: {{student.login}} \t  </td><td>  \tNAZWISKO : \t{{student.surname}}</td></tr>      
+                </div>
+</div>
+
+
   </table>
-  <button (click)="function($event)"> JEDEN</button>
-    <button (click)="clicked($event)"> DWA</button>
-    <button (click)="postTeacherek()"> 3333</button>
-    <button (click)="getTeacher()"> GET TEACHEREK</button>
-{{teacher.subjecList}}
+  <button (click)="getSubjectsByTeacher()"> PRZEDMIOTY</button>
+    <button (click)="getTeachers2()"> Nauczyciele</button>
+    <button (click)="postTeacherek()"> POST NAUCZYCIELA</button>
+
 `,
     providers: [TeacherService, AuthenticationService, MainService]
-}) export  class TeacherComponent{
+})
+export class TeacherComponent {
 
-     classID = "aaa";
+    logedUser: User;
+
+    subjectList: Subject[];
+    subject: Subject;
+    studentList: Student[];
+
+    tableData: any[];
 
 
+    subjectID: string;
 
-
-    clicked(event) {
-        this.teachers = [];
-    }
-
-    function (event) {
-        this.getTeachers();
-
-    }
-
+    teacherID: string = "1";
     teachers: Teacher[];
 
     teacher = this.getTeacher;
 
 
-    goToClassComponent(){
-        this._router.navigate(['Class']);
-    }
-
     constructor(private _teacherService: TeacherService,
-    private _authenticationServie: AuthenticationService,
+                private _authenticationServie: AuthenticationService,
                 private _router: Router, private mainService: MainService) {
-
-        this.mainService.addID("DUPA TEACHER" );
-        console.log("KONSTRUKTOR TEACHER" );
-
     }
 
     ngOnInit() {
         this.getTeachers();
+        this.getSubjectsByTeacher();
     }
 
     getTeachers(): void {
@@ -79,23 +86,74 @@ import {MainService} from "../services/main.service";
         this._teacherService.addTeache(this.teacher)
 
     }
-    postTeacherek(){
+
+    postTeacherek() {
         this._teacherService.AddTeacherek()
-            .subscribe((data:Teacher)=> this.teacher = data,
+            .subscribe((data: Teacher)=> this.teacher = data,
                 error => alert(error),
                 ()=>console.log("POST POSZEDL"))
     }
 
-    subjectList: Subject[];
-    classList: SchoolClass[];
-    studentList:Student[];
 
-
-    getTeacher(){
+    getTeacher() {
         this._authenticationServie.getUser("panJacek")
-            .subscribe((data:Teacher)=> this.teacher = data,
+            .subscribe((data: Teacher)=> this.teacher = data,
                 error => alert(error),
                 ()=>console.log("GET POSZEDL"))
 
     }
+
+    getSubjectList(teacherID) {
+        this._teacherService.getSubjectsByTeacherId(teacherID)
+            .subscribe((data: Subject[])=> this.subjectList = data,
+                error => alert(error),
+                ()=>console.log("LISTA PRZEDMIOTOW UZYTKOWNIKA"))
+
+    }
+
+    getSubjectsByTeacher() {
+        console.log("getSUBJECT AJAX");
+        this.getSubjectList(this.teacherID);
+        console.log("getSUBJECT");
+        this.tableData = this.subjectList;
+    }
+
+    getTeachers2() {
+        console.log("getTeachers");
+        this.tableData = this.teachers;
+    }
+
+    getSubjectById(subjectID) {
+        this.resetValues();
+        this._teacherService.getSubjectById(subjectID)
+            .subscribe((data: Subject)=> this.subject = data,
+                error => alert(error),
+                ()=>console.log("PRZEDMIOT PO ID"))
+    }
+
+    getStudentListByClassId(classID) {
+        this._teacherService.getStudentsByClassId(classID)
+            .subscribe((data: Student[])=> this.studentList = data,
+                error => alert(error),
+                ()=>console.log("LISTA UCZNIOW KLASY" + this.studentList.toString()))
+    }
+
+    resetValues() {
+        this.studentList = [];
+    }
+
+    /*      getSubject(){
+     this._teacherService.getSubjectsByTeacherId(this.subjectID)
+     .subscribe((data:Subject[])=> this.subjectList = data,
+     error => alert(error),
+     ()=>console.log("GET POSZEDL na sub list"))
+     }*/
+
+
+    /*    getLogedUser(){
+     this._authenticationService.getUser(this.user.login)
+     .subscribe((data:User)=>this.logedUser = data,
+     error => alert(error),
+     ()=>console.log("GET NA USERA OISZEDK"))
+     }*/
 }
