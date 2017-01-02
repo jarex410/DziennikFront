@@ -31,7 +31,6 @@ export interface SchoolClass {
 
 export interface Grade {
     value:string;
-    studentList: Student[];
 }
 
 export class User {

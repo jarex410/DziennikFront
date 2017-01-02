@@ -102,6 +102,16 @@ export class TeacherService {
             .catch(this.handleError);
     }
 
+    getStudentsWithGradesByClassId(classID):Observable<Student[]> {
+        let parametrers = new URLSearchParams();
+        parametrers.set("classID", classID);
+
+        return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/grades',
+            {search: parametrers})
+            .map((response: Response) => <Student[]>response.json())
+            .catch(this.handleError);
+    }
+
 
 // to avoid breaking the rest of our app
 // I extract the id from the person url

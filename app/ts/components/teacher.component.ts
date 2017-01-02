@@ -24,16 +24,17 @@ import {MainService} from "../services/main.service";
 <H1>{{subject.name}}</H1>
     <td *ngFor="#schoolClass of subject.schoolClasses">
             {{schoolClass.name}}
-            <button (click)="getStudentListByClassId([schoolClass.id])">{{schoolClass.id}}</button>
+            <button (click)="getStudentsWithGradesByClassId([schoolClass.id])">{{schoolClass.id}}</button>
     </td>
 </div>
 
- <div *ngIf="[studentList] != 0  && [studentList].length > 0">
-            <tr *ngFor="#student of studentList">
+ <div *ngIf="[studentsWithGradesList] != 0  && [studentsWithGradesList].length > 0">
+            <tr *ngFor="#student of studentsWithGradesList">
             <H1>UCZEN : </H1>
             <div *ngIf="[student] != 0">
-            <tr><td> IMIE: {{student.login}} \t  </td><td>  \tNAZWISKO : \t{{student.surname}}</td></tr>      
+            <tr><td> IMIE: {{student.name}} \t  </td><td>  \tNAZWISKO : \t{{student.surname}}</td>OCENY: <td *ngFor="#grade of student.grades"> {{grade.gradeValue}},</td></tr>      
                 </div>
+     
 </div>
 
 
@@ -54,7 +55,7 @@ export class TeacherComponent {
     studentList: Student[];
 
     tableData: any[];
-
+    studentsWithGradesList: any[];
 
     subjectID: string;
 
@@ -136,6 +137,13 @@ export class TeacherComponent {
             .subscribe((data: Student[])=> this.studentList = data,
                 error => alert(error),
                 ()=>console.log("LISTA UCZNIOW KLASY" + this.studentList.toString()))
+    }
+
+    getStudentsWithGradesByClassId(classID) {
+        this._teacherService.getStudentsWithGradesByClassId(classID)
+            .subscribe((data: any[])=> this.studentsWithGradesList = data,
+                error => alert(error),
+                ()=>console.log("LISTA UCZNIOW KLASY z ocenami" + this.studentsWithGradesList.toString());
     }
 
     resetValues() {

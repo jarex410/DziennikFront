@@ -90,6 +90,13 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
+                TeacherService.prototype.getStudentsWithGradesByClassId = function (classID) {
+                    var parametrers = new http_1.URLSearchParams();
+                    parametrers.set("classID", classID);
+                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/grades', { search: parametrers })
+                        .map(function (response) { return response.json(); })
+                        .catch(this.handleError);
+                };
                 // to avoid breaking the rest of our app
                 // I extract the id from the person url
                 TeacherService.prototype.extractId = function (personData) {
