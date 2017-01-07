@@ -7,7 +7,7 @@ import {LoginComponent} from './components/login.component';
 import {PrivateComponent} from './components/private.component';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {TeacherComponent} from "./components/teacher.component";
-import {ClassComponent} from "./components/class.component";
+import {StudentComponent} from "./components/student.component";
 
 
 
@@ -23,7 +23,7 @@ import {ClassComponent} from "./components/class.component";
     { path: '/home', name: 'Home', component: PrivateComponent},
     { path: '/login', name: 'Login', component: LoginComponent , useAsDefault:true },
     { path: '/teacher', name: 'Teacher', component: TeacherComponent },
-    { path: '/class', name: 'Class', component: ClassComponent }
+    { path: '/student', name: 'Student', component: StudentComponent }
 ])
 
 export class AppComponent {}

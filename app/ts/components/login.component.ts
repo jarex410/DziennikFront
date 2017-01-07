@@ -5,7 +5,6 @@ import {Router} from "angular2/src/router/router";
 
 @Component({
     selector: 'login-form',
-    providers: [AuthenticationService],
     template: `
         <div class="container" >
             <div class="title">
@@ -41,9 +40,9 @@ import {Router} from "angular2/src/router/router";
 
 export class LoginComponent {
 
-    public user = new User('','',null);
+    public user = new User(null, '','',null, null, null);
     public errorMsg = '';
-    private currentUser = new User('test','test',null);
+    private currentUser = new User(null, '','',null, null, null);
 
     constructor(private _router: Router,
         private _authenticationService:AuthenticationService) {}
@@ -51,7 +50,8 @@ export class LoginComponent {
     login() {
         console.log("DUPOA")
         this.getUser();
-        if(this.currentUser.password != this.user.password){
+        if(this.currentUser.password != this.user.password
+        && this.currentUser.login != this.user.password){
             this.errorMsg = 'fail';
         } else {
             if(this.currentUser.teacher){
@@ -72,5 +72,10 @@ export class LoginComponent {
             .subscribe((data:User)=>this.currentUser = data,
                 error => alert(error),
                 ()=>console.log("GET NA USERA OISZEDK"))
+        this._authenticationService.setCurrentUser(this.currentUser);
+    }
+
+    getCurentUser(){
+        return this.currentUser;
     }
 }

@@ -1,9 +1,7 @@
 import {TeacherService} from "../services/teacher.service";
-import {Teacher, Subject, Student, User} from "../model/dziennik";
+import {Teacher, Subject, Student, Grade, User} from "../model/dziennik";
 import {Component} from "angular2/core";
 import {AuthenticationService} from "../services/authentication.service";
-import {Router} from "angular2/src/router/router";
-import {MainService} from "../services/main.service";
 
 
 @Component({
@@ -11,7 +9,7 @@ import {MainService} from "../services/main.service";
     template: `
 <table class="table">
   <tr>
-  <td>PRZEDMIOT</td>
+  <td>WITAJ {{currentUser.name}} ___ {{currentUser.surname}}</td>
 </tr>
 <tr *ngFor="#object of tableData">
 {{object.id}}
@@ -28,11 +26,11 @@ import {MainService} from "../services/main.service";
     </td>
 </div>
 
- <div *ngIf="[studentsWithGradesList] != 0  && [studentsWithGradesList].length > 0">
-            <tr *ngFor="#student of studentsWithGradesList">
+ <div *ngIf="[studentsWithGradesList] != 0  && [studentsWithGradesAsSting].length > 0">
+            <tr *ngFor="#student of studentsWithGradesAsSting">
             <H1>UCZEN : </H1>
             <div *ngIf="[student] != 0">
-            <tr><td> IMIE: {{student.name}} \t  </td><td>  \tNAZWISKO : \t{{student.surname}}</td>OCENY: <td *ngFor="#grade of student.grades"> {{grade.gradeValue}},</td></tr>      
+            <tr><td> <span>IMIE:  </span> {{student.name}} </td><td>  <span>  NAZWISKO :</span> \t{{student.surname}}</td><span> OCENY  </span><td> <div [attr.id] = "student.id">  <input  [(ngModel)]="student.gradesAsString" > <button (click)="dodajOCeny($event, [student.id])" >Dodaj Oceny {{student.id}} a</button></div></td></tr>      
                 </div>
      
 </div>
@@ -44,11 +42,11 @@ import {MainService} from "../services/main.service";
     <button (click)="postTeacherek()"> POST NAUCZYCIELA</button>
 
 `,
-    providers: [TeacherService, AuthenticationService, MainService]
+    providers: [TeacherService]
 })
 export class TeacherComponent {
 
-    logedUser: User;
+    currentUser: User;
 
     subjectList: Subject[];
     subject: Subject;
@@ -57,21 +55,24 @@ export class TeacherComponent {
     tableData: any[];
     studentsWithGradesList: any[];
 
-    subjectID: string;
+    curentSubjectID: string;
 
-    teacherID: string = "1";
+    teacherID: string;
     teachers: Teacher[];
 
     teacher = this.getTeacher;
 
+    newGrades: string = '';
+
 
     constructor(private _teacherService: TeacherService,
-                private _authenticationServie: AuthenticationService,
-                private _router: Router, private mainService: MainService) {
+                private _authenticationServie: AuthenticationService) {
     }
 
     ngOnInit() {
-        this.getTeachers();
+
+        this.currentUser = this._authenticationServie.getCurrentUser();
+        this.teacherID = this.currentUser.id;
         this.getSubjectsByTeacher();
     }
 
@@ -82,15 +83,9 @@ export class TeacherComponent {
                 () => console.log('Get all Items complete'));
     }
 
-    submitForm() {
-
-        this._teacherService.addTeache(this.teacher)
-
-    }
-
     postTeacherek() {
-        this._teacherService.AddTeacherek()
-            .subscribe((data: Teacher)=> this.teacher = data,
+        this._teacherService.postTeacher()
+            .subscribe(
                 error => alert(error),
                 ()=>console.log("POST POSZEDL"))
     }
@@ -126,6 +121,7 @@ export class TeacherComponent {
 
     getSubjectById(subjectID) {
         this.resetValues();
+        this.curentSubjectID = subjectID;
         this._teacherService.getSubjectById(subjectID)
             .subscribe((data: Subject)=> this.subject = data,
                 error => alert(error),
@@ -140,14 +136,49 @@ export class TeacherComponent {
     }
 
     getStudentsWithGradesByClassId(classID) {
-        this._teacherService.getStudentsWithGradesByClassId(classID)
+        this._teacherService.getStudentsWithGradesByClassId(classID, this.curentSubjectID)
             .subscribe((data: any[])=> this.studentsWithGradesList = data,
                 error => alert(error),
-                ()=>console.log("LISTA UCZNIOW KLASY z ocenami" + this.studentsWithGradesList.toString());
+                ()=>console.log("LISTA UCZNIOW KLASY z ocenami" + this.studentsWithGradesList.toString()));
+        this.getGradesAsString();
+    }
+
+    studentsWithGradesAsSting = [];
+
+    getGradesAsString() {
+        this.studentsWithGradesList.forEach(element => {
+            let index = 0;
+            let grades = element.grades;
+            let gradesAsString = '';
+            grades.forEach(grade => {
+                gradesAsString += grade.gradeValue + ', ';
+            })
+            element.gradesAsString = gradesAsString;
+            this.studentsWithGradesAsSting.push(this.studentsWithGradesList[index] = element);
+            index += 1;
+        })
     }
 
     resetValues() {
         this.studentList = [];
+        this.studentsWithGradesList = [];
+        this.studentsWithGradesAsSting = [];
+        console.log("RESET");
+    }
+
+    dodajOCeny(event, studentID) {
+
+        var target = event.target || event.srcElement || event.currentTarget;
+        var value = target.parentElement.firstElementChild.value;
+
+        let pom = value.split(',');
+        let grade = new Grade(studentID[0], this.curentSubjectID[0], pom, null, null);
+        console.log("GRADE        " + grade.toString())
+        this._teacherService.addGradesToStudent(grade)
+            .subscribe(
+                error => alert(error),
+                ()=>console.log("POST POSZEDL z ocenami"))
+        this.newGrades = '';
     }
 
     /*      getSubject(){

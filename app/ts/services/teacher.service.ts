@@ -1,6 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Http,Headers,URLSearchParams} from 'angular2/http'
-import {Teacher, Subject, Student} from "../model/dziennik";
+import {Teacher, Subject, Student, Grade} from "../model/dziennik";
 import {Response} from "angular2/src/http/static_response";
 import 'rxjs/add/operator/map'
 import 'rxjs/Rx';
@@ -39,8 +39,9 @@ export class TeacherService {
     }  //leci po urlu
 
 
-     AddTeacherek (){
-        let toAdd = JSON.stringify({
+     postTeacher (){
+
+         let toAdd = JSON.stringify({
                 address: "Rzeszow 2",
                 login: "zzzz",
                 name: "zzzz",
@@ -49,11 +50,11 @@ export class TeacherService {
                 isEducator: "true"
             }
         );
-        var params ='json='+toAdd;
+
         var headers = new Headers();
         headers.append('Content-Type','application/json');
 
-        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', toAdd, { headers: headers })
+        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, { headers: headers })
             .catch(this.handleError);
     }
 
@@ -102,13 +103,25 @@ export class TeacherService {
             .catch(this.handleError);
     }
 
-    getStudentsWithGradesByClassId(classID):Observable<Student[]> {
+    getStudentsWithGradesByClassId(classID,subjectID):Observable<Student[]> {
         let parametrers = new URLSearchParams();
         parametrers.set("classID", classID);
+        parametrers.set("subjectID", subjectID)
 
         return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/grades',
             {search: parametrers})
             .map((response: Response) => <Student[]>response.json())
+            .catch(this.handleError);
+    }
+
+    addGradesToStudent(grades) {
+
+        let toAdd = JSON.stringify(grades);
+
+        var headers = new Headers();
+        headers.append('Content-Type','application/json');
+
+        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, { headers: headers })
             .catch(this.handleError);
     }
 

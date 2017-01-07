@@ -7,11 +7,21 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class AuthenticationService {
 
-    private currentUSer: User;
+    currentUser: User;
 
     constructor(private _router: Router,
                 private http: Http) {
     }
+
+
+    getCurrentUser():User{
+        return this.currentUser;
+    }
+
+    setCurrentUser(user){
+        this.currentUser=user;
+    }
+
 
     logout() {
         localStorage.removeItem("user");

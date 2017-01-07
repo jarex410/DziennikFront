@@ -29,6 +29,12 @@ System.register(["angular2/core", "angular2/router", "angular2/http"], function(
                     this._router = _router;
                     this.http = http;
                 }
+                AuthenticationService.prototype.getCurrentUser = function () {
+                    return this.currentUser;
+                };
+                AuthenticationService.prototype.setCurrentUser = function (user) {
+                    this.currentUser = user;
+                };
                 AuthenticationService.prototype.logout = function () {
                     localStorage.removeItem("user");
                     this._router.navigate(['Login']);

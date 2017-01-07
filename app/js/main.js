@@ -1,7 +1,7 @@
-System.register(['angular2/core', 'angular2/router', 'angular2/platform/browser', "./app.component", 'angular2/http'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/platform/browser', "./app.component", 'angular2/http', "./services/authentication.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var core_1, router_1, browser_1, app_component_1, http_1;
+    var core_1, router_1, browser_1, app_component_1, http_1, authentication_service_1;
     return {
         setters:[
             function (core_1_1) {
@@ -18,9 +18,12 @@ System.register(['angular2/core', 'angular2/router', 'angular2/platform/browser'
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (authentication_service_1_1) {
+                authentication_service_1 = authentication_service_1_1;
             }],
         execute: function() {
-            browser_1.bootstrap(app_component_1.AppComponent, [http_1.HTTP_PROVIDERS,
+            browser_1.bootstrap(app_component_1.AppComponent, [http_1.HTTP_PROVIDERS, authentication_service_1.AuthenticationService,
                 router_1.ROUTER_PROVIDERS, core_1.bind(router_1.APP_BASE_HREF).toValue(location.pathname)
             ]);
         }

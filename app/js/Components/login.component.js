@@ -31,14 +31,15 @@ System.register(['angular2/core', '../services/authentication.service', '../mode
                 function LoginComponent(_router, _authenticationService) {
                     this._router = _router;
                     this._authenticationService = _authenticationService;
-                    this.user = new dziennik_1.User('', '', null);
+                    this.user = new dziennik_1.User(null, '', '', null, null, null);
                     this.errorMsg = '';
-                    this.currentUser = new dziennik_1.User('test', 'test', null);
+                    this.currentUser = new dziennik_1.User(null, '', '', null, null, null);
                 }
                 LoginComponent.prototype.login = function () {
                     console.log("DUPOA");
                     this.getUser();
-                    if (this.currentUser.password != this.user.password) {
+                    if (this.currentUser.password != this.user.password
+                        && this.currentUser.login != this.user.password) {
                         this.errorMsg = 'fail';
                     }
                     else {
@@ -57,11 +58,14 @@ System.register(['angular2/core', '../services/authentication.service', '../mode
                     var _this = this;
                     this._authenticationService.getUser(this.user.login)
                         .subscribe(function (data) { return _this.currentUser = data; }, function (error) { return alert(error); }, function () { return console.log("GET NA USERA OISZEDK"); });
+                    this._authenticationService.setCurrentUser(this.currentUser);
+                };
+                LoginComponent.prototype.getCurentUser = function () {
+                    return this.currentUser;
                 };
                 LoginComponent = __decorate([
                     core_1.Component({
                         selector: 'login-form',
-                        providers: [authentication_service_1.AuthenticationService],
                         template: "\n        <div class=\"container\" >\n            <div class=\"title\">\n                Welcome\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <input [(ngModel)]=\"user.login\" id=\"email\" \n                            type=\"text\" class=\"validate\">\n                        <label for=\"login\">Login</label>\n                    </div>\n                </div>\n \n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <input [(ngModel)]=\"user.password\" id=\"password\" \n                            type=\"password\" class=\"validate\">\n                        <label for=\"password\">Password</label>\n                    </div>\n                </div>\n \n                <span>{{errorMsg}}</span>\n                <button (click)=\"login()\" \n                    class=\"btn waves-effect waves-light\" \n                    type=\"submit\" name=\"action\">Login</button>\n            </div>\n        </div>\n        {{currentUser.password}}\n        {{currentUser.teacher}}\n    \t"
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, authentication_service_1.AuthenticationService])

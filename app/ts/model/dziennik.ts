@@ -2,40 +2,48 @@
  * Created by JaroLP on 2016-12-03.
  */
 export interface Teacher {
-    id:string;
-    login:string;
-    name:string;
-    surname:string;
-    address:string;
-    subjectList:Subject[];
+    id: string;
+    login: string;
+    name: string;
+    surname: string;
+    address: string;
+    subjectList: Subject[];
 
 }
 
 export interface Student {
-    login:string;
-    name:string
-    surname:string;
-    grades: Grade[];
+    login: string;
+    name: string
+    surname: string;
+    grades: string;
 }
 
 
 export interface Subject {
-    name:string;
+    name: string;
     schoolClasses: SchoolClass[];
 }
 
 export interface SchoolClass {
-    name:string;
+    name: string;
     studentList: Student[];
 }
 
-export interface Grade {
-    value:string;
+export class Grade {
+    constructor(public studentID: string,
+                public subjectID: string,
+                public values: string[],
+                public subjecName: string,
+                public valuesAssString: string) {
+    };
 }
 
 export class User {
-    constructor(
-        public login: string,
-        public password: string,
-        public teacher: boolean) { }
+    constructor(public id: string,
+                public login: string,
+                public password: string,
+                public teacher: boolean,
+                public name: string,
+                public surname: string) {
+    }
 }

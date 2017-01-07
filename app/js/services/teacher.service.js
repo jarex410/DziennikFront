@@ -48,7 +48,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                     return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
                         .map(function (res) { return res.json(); });
                 }; //leci po urlu
-                TeacherService.prototype.AddTeacherek = function () {
+                TeacherService.prototype.postTeacher = function () {
                     var toAdd = JSON.stringify({
                         address: "Rzeszow 2",
                         login: "zzzz",
@@ -57,10 +57,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                         surname: "zzzzz",
                         isEducator: "true"
                     });
-                    var params = 'json=' + toAdd;
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', toAdd, { headers: headers })
+                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, { headers: headers })
                         .catch(this.handleError);
                 };
                 TeacherService.prototype.addTeacher = function (teacher) {
@@ -90,11 +89,19 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
-                TeacherService.prototype.getStudentsWithGradesByClassId = function (classID) {
+                TeacherService.prototype.getStudentsWithGradesByClassId = function (classID, subjectID) {
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("classID", classID);
+                    parametrers.set("subjectID", subjectID);
                     return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/grades', { search: parametrers })
                         .map(function (response) { return response.json(); })
+                        .catch(this.handleError);
+                };
+                TeacherService.prototype.addGradesToStudent = function (grades) {
+                    var toAdd = JSON.stringify(grades);
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/json');
+                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, { headers: headers })
                         .catch(this.handleError);
                 };
                 // to avoid breaking the rest of our app

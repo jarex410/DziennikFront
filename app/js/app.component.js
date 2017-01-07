@@ -1,4 +1,4 @@
-System.register(['angular2/core', "angular2/http", './components/login.component', './components/private.component', 'angular2/router', "./components/teacher.component", "./components/class.component"], function(exports_1, context_1) {
+System.register(['angular2/core', "angular2/http", './components/login.component', './components/private.component', 'angular2/router', "./components/teacher.component", "./components/student.component"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', "angular2/http", './components/login.component
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, login_component_1, private_component_1, router_1, teacher_component_1, class_component_1;
+    var core_1, http_1, login_component_1, private_component_1, router_1, teacher_component_1, student_component_1;
     var AppComponent;
     return {
         setters:[
@@ -32,8 +32,8 @@ System.register(['angular2/core', "angular2/http", './components/login.component
             function (teacher_component_1_1) {
                 teacher_component_1 = teacher_component_1_1;
             },
-            function (class_component_1_1) {
-                class_component_1 = class_component_1_1;
+            function (student_component_1_1) {
+                student_component_1 = student_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -50,7 +50,7 @@ System.register(['angular2/core', "angular2/http", './components/login.component
                         { path: '/home', name: 'Home', component: private_component_1.PrivateComponent },
                         { path: '/login', name: 'Login', component: login_component_1.LoginComponent, useAsDefault: true },
                         { path: '/teacher', name: 'Teacher', component: teacher_component_1.TeacherComponent },
-                        { path: '/class', name: 'Class', component: class_component_1.ClassComponent }
+                        { path: '/student', name: 'Student', component: student_component_1.StudentComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
