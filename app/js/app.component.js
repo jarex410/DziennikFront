@@ -49,7 +49,6 @@ System.register(['angular2/core', "angular2/http", './components/login.component
                     router_1.RouteConfig([
                         { path: '/login', name: 'Login', component: login_component_1.LoginComponent, useAsDefault: true },
                         { path: '/teacher', name: 'Teacher', component: teacher_component_1.TeacherComponent },
-                        { path: '/student', name: 'Student', component: student_component_1.StudentComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
