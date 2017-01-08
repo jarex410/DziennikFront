@@ -9,21 +9,7 @@
     "typings": "typings",
     "postinstall": "typings install"
   },
-  "engines": {
-    "node": "5.1.0",
-    "npm": "3.4.1"
-  },
-  "scripts": {
-    "test": "grunt test",
-    "postinstall": "bower install"
-  },
-  "dependencies": {
-    "bower": "1.7.1",
-    "express": "4.13.3"
-  },
-  "cacheDirectories": ["node_modules"]
-},
-  "license":  "ISC",
+  "license": "ISC",
   "dependencies": {
     "angular2": "2.0.0-beta.13",
     "systemjs": "0.19.25",
@@ -36,6 +22,21 @@
     "concurrently": "^2.0.0",
     "lite-server": "^2.1.0",
     "typescript": "^1.8.9",
-    "typings":"^0.7.11"
-  }
+    "typings": "^0.7.11"
+  },
+  "engines": {
+    "node": "5.1.0",
+    "npm": "3.4.1"
+  },
+  "scripts": {
+    "test": "grunt test",
+    "postinstall": "bower install"
+  },
+  "dependencies": {
+    "bower": "1.7.1",
+    "express": "4.13.3"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ]
 }
