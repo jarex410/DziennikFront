@@ -22,15 +22,12 @@
     "concurrently": "^2.0.0",
     "lite-server": "^2.1.0",
     "typescript": "^1.8.9",
-    "typings": "^0.7.11"
+    "typings": "^0.7.11",
+    "express": "4.13.3"
   },
   "engines": {
     "node": "5.1.0",
     "npm": "3.4.1"
-  },
-  "dependencies": {
-    "bower": "1.7.1",
-    "express": "4.13.3"
   },
   "cacheDirectories": [
     "node_modules"
