@@ -28,10 +28,6 @@
     "node": "5.1.0",
     "npm": "3.4.1"
   },
-  "scripts": {
-    "test": "grunt test",
-    "postinstall": "typings install"
-  },
   "dependencies": {
     "bower": "1.7.1",
     "express": "4.13.3"
