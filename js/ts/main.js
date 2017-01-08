@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2/platform/browser', "./app.component.js", 'angular2/http', "./services/authentication.service.js"], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/platform/browser', "./app.component.js" , 'angular2/http', "./services/authentication.service.jsP"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var core_1, router_1, browser_1, app_component_1, http_1, authentication_service_1;
