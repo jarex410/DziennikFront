@@ -1,4 +1,4 @@
-System.register(['angular2/core', "angular2/http", './components/login.component.js', './components/private.component.js', 'angular2/router', "./components/teacher.component.js", "./components/student.component.js"], function(exports_1, context_1) {
+System.register(['angular2/core', "angular2/http", './components/login.component.js',  'angular2/router', "./components/teacher.component.js", "./components/student.component.js"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
