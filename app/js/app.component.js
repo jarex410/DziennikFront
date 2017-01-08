@@ -47,7 +47,6 @@ System.register(['angular2/core', "angular2/http", './components/login.component
                         template: "\n            <router-outlet></router-outlet>\n        "
                     }),
                     router_1.RouteConfig([
-                        { path: '/home', name: 'Home', component: private_component_1.PrivateComponent },
                         { path: '/login', name: 'Login', component: login_component_1.LoginComponent, useAsDefault: true },
                         { path: '/teacher', name: 'Teacher', component: teacher_component_1.TeacherComponent },
                         { path: '/student', name: 'Student', component: student_component_1.StudentComponent }
