@@ -28,7 +28,7 @@ import {Router} from "angular2/src/router/router";
                 </div>
  
                 <span>{{errorMsg}}</span>
-                <button (click)="login()" 
+                <button (click)="login($event)" 
                     class="btn waves-effect waves-light" 
                     type="submit" name="action">Login</button>
             </div>
@@ -47,7 +47,8 @@ export class LoginComponent {
     constructor(private _router: Router,
         private _authenticationService:AuthenticationService) {}
 
-    login() {
+    login(event) {
+        event.stopPropagation();
         console.log("DUPOA")
         this.getUser();
         if(this.currentUser.password != this.user.password
