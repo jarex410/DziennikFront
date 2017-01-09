@@ -35,7 +35,8 @@ System.register(['angular2/core', '../services/authentication.service', '../mode
                     this.errorMsg = '';
                     this.currentUser = new dziennik_1.User(null, '', '', null, null, null);
                 }
-                LoginComponent.prototype.login = function () {
+                LoginComponent.prototype.login = function (event) {
+                    event.stopPropagation();
                     console.log("DUPOA");
                     this.getUser();
                     if (this.currentUser.password != this.user.password
@@ -66,7 +67,7 @@ System.register(['angular2/core', '../services/authentication.service', '../mode
                 LoginComponent = __decorate([
                     core_1.Component({
                         selector: 'login-form',
-                        template: "\n        <div class=\"container\" >\n            <div class=\"title\">\n                Welcome\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <input [(ngModel)]=\"user.login\" id=\"email\" \n                            type=\"text\" class=\"validate\">\n                        <label for=\"login\">Login</label>\n                    </div>\n                </div>\n \n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <input [(ngModel)]=\"user.password\" id=\"password\" \n                            type=\"password\" class=\"validate\">\n                        <label for=\"password\">Password</label>\n                    </div>\n                </div>\n \n                <span>{{errorMsg}}</span>\n                <button (click)=\"login()\" \n                    class=\"btn waves-effect waves-light\" \n                    type=\"submit\" name=\"action\">Login</button>\n            </div>\n        </div>\n        {{currentUser.password}}\n        {{currentUser.teacher}}\n    \t"
+                        template: "\n        <div class=\"container\" >\n            <div class=\"title\">\n                Welcome\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <input [(ngModel)]=\"user.login\" id=\"email\" \n                            type=\"text\" class=\"validate\">\n                        <label for=\"login\">Login</label>\n                    </div>\n                </div>\n \n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <input [(ngModel)]=\"user.password\" id=\"password\" \n                            type=\"password\" class=\"validate\">\n                        <label for=\"password\">Password</label>\n                    </div>\n                </div>\n \n                <span>{{errorMsg}}</span>\n                <button (click)=\"login($event)\" \n                    class=\"btn waves-effect waves-light\" \n                    type=\"submit\" name=\"action\">Login</button>\n            </div>\n        </div>\n        {{currentUser.password}}\n        {{currentUser.teacher}}\n    \t"
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, authentication_service_1.AuthenticationService])
                 ], LoginComponent);
