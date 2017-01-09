@@ -1,4 +1,4 @@
-System.register(["angular2/core", "../services/authentication.service.js", "../services/student.service.js"], function(exports_1, context_1) {
+System.register(["angular2/core", "../services/authentication.service", "../services/student.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -40,7 +40,7 @@ System.register(["angular2/core", "../services/authentication.service.js", "../s
                 StudentComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n<table class=\"table\">\n  <tr>\n  <td>IMIE</td><td>{{subjectWithGrades}} KUPA</td>\n</tr>\n<h1>UCZENNN</h1>\n  </table>\n  <button (click)=\"getCard() \"> KARDKA</button>\n   <p>OCENY:</p>\n    <ul>\n      <li *ngFor=\"#subject of subjectWithGrades\">\n        <td>{{ subject.subjectName }}</td><td>{{ subject.valuesAssString}}</td>\n      </li>\n    </ul>\n\n",
+                        template: "\n<table class=\"table\">\n  <tr>\n</tr>\n<h1>UCZENNN</h1>\n  </table>\n  <button (click)=\"getCard() \"> KARDKA</button>\n   <p>OCENY:</p>\n    <ul>\n      <li *ngFor=\"#subject of subjectWithGrades\">\n        <td>{{ subject.subjectName }}</td><td>{{ subject.valuesAssString}}</td>\n      </li>\n    </ul>\n\n",
                         providers: [student_service_1.StudentService]
                     }), 
                     __metadata('design:paramtypes', [authentication_service_1.AuthenticationService, student_service_1.StudentService])

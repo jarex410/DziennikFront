@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/authentication.service', '../model/dziennik', "angular2/src/router/router"], function(exports_1, context_1) {
+System.register(["angular2/core", "../services/authentication.service", "../model/dziennik", "angular2/src/router/router"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -37,7 +37,6 @@ System.register(['angular2/core', '../services/authentication.service', '../mode
                 }
                 LoginComponent.prototype.login = function (event) {
                     event.stopPropagation();
-                    console.log("DUPOA");
                     this.getUser();
                     if (this.currentUser.password != this.user.password
                         && this.currentUser.login != this.user.password) {
@@ -53,7 +52,6 @@ System.register(['angular2/core', '../services/authentication.service', '../mode
                             this._router.navigate(['Student']);
                         }
                     }
-                    console.log("DUPOA2222");
                 };
                 LoginComponent.prototype.getUser = function () {
                     var _this = this;

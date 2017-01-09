@@ -9,7 +9,6 @@ import {User} from "../model/dziennik";
     template: `
 <table class="table">
   <tr>
-  <td>IMIE</td><td>{{subjectWithGrades}} KUPA</td>
 </tr>
 <h1>UCZENNN</h1>
   </table>
@@ -26,8 +25,8 @@ import {User} from "../model/dziennik";
 })
 export class StudentComponent {
 
-    subjectWithGrades : any[];
-    currentUser :User;
+    subjectWithGrades: any[];
+    currentUser: User;
 
     constructor(private _authenticationService: AuthenticationService,
                 private _studentService: StudentService) {
@@ -37,7 +36,7 @@ export class StudentComponent {
 
     ngOnInit() {
 
-        this.currentUser =  this._authenticationService.getCurrentUser();
+        this.currentUser = this._authenticationService.getCurrentUser();
     }
 
     getCard() {

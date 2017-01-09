@@ -1,6 +1,6 @@
-import {Component, ElementRef} from 'angular2/core';
-import {AuthenticationService} from '../services/authentication.service'
-import { User } from '../model/dziennik';
+import {Component} from "angular2/core";
+import {AuthenticationService} from "../services/authentication.service";
+import {User} from "../model/dziennik";
 import {Router} from "angular2/src/router/router";
 
 @Component({
@@ -40,43 +40,40 @@ import {Router} from "angular2/src/router/router";
 
 export class LoginComponent {
 
-    public user = new User(null, '','',null, null, null);
+    public user = new User(null, '', '', null, null, null);
     public errorMsg = '';
-    private currentUser = new User(null, '','',null, null, null);
+    private currentUser = new User(null, '', '', null, null, null);
 
     constructor(private _router: Router,
-        private _authenticationService:AuthenticationService) {}
+                private _authenticationService: AuthenticationService) {
+    }
 
     login(event) {
         event.stopPropagation();
-        console.log("DUPOA")
         this.getUser();
-        if(this.currentUser.password != this.user.password
-        && this.currentUser.login != this.user.password){
+        if (this.currentUser.password != this.user.password
+            && this.currentUser.login != this.user.password) {
             this.errorMsg = 'fail';
         } else {
-            if(this.currentUser.teacher){
+            if (this.currentUser.teacher) {
                 this.errorMsg = 'SUKCES + nauczyciel';
                 this._router.navigate(['Teacher']);
             } else {
                 this.errorMsg = 'SUKCES + uczen';
                 this._router.navigate(['Student']);
             }
-
-            //
         }
-        console.log("DUPOA2222")
     }
 
-    getUser(){
+    getUser() {
         this._authenticationService.getUser(this.user.login)
-            .subscribe((data:User)=>this.currentUser = data,
+            .subscribe((data: User)=>this.currentUser = data,
                 error => alert(error),
                 ()=>console.log("GET NA USERA OISZEDK"))
         this._authenticationService.setCurrentUser(this.currentUser);
     }
 
-    getCurentUser(){
+    getCurentUser() {
         return this.currentUser;
     }
 }

@@ -13,41 +13,17 @@ export class AuthenticationService {
                 private http: Http) {
     }
 
-
-    getCurrentUser():User{
+    getCurrentUser(): User {
         return this.currentUser;
     }
 
-    setCurrentUser(user){
-        this.currentUser=user;
+    setCurrentUser(user) {
+        this.currentUser = user;
     }
-
 
     logout() {
         localStorage.removeItem("user");
         this._router.navigate(['Login']);
-    }
-
-    login(user) {
-        var authenticatedUser = this.getUser(user.login);
-        console.log("SERWISE " + user.login)
-
-            console.log("SUKCES")
-        console.log("CURENT "+ authenticatedUser.toString())
-        if (authenticatedUser) {
-            localStorage.setItem("user", authenticatedUser.toString());
-            this._router.navigate(['Home']);
-            return true;
-        }
-        return false;
-
-    }
-
-    checkCredentials() {
-                if (localStorage.getItem("user.ts") === null) {
-         this._router.navigate(['Login']);
-         }
-
     }
 
     getUser(login: string): Observable<User> {

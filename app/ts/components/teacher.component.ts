@@ -12,7 +12,6 @@ import {AuthenticationService} from "../services/authentication.service";
   <td>WITAJ {{currentUser.name}} ___ {{currentUser.surname}}</td>
 </tr>
 <tr *ngFor="#object of tableData">
-{{object.id}}
      <td>{{object.name}}</td>
           <button (click)="getSubjectById([object.id])">{{object.id}}</button>
      <!--<td (click)="goToClassComponent()" *ngFor="#class of subject.schoolClasses"><div>{{class.name}}</div></td>-->
@@ -70,7 +69,6 @@ export class TeacherComponent {
     }
 
     ngOnInit() {
-
         this.currentUser = this._authenticationServie.getCurrentUser();
         this.teacherID = this.currentUser.id;
         this.getSubjectsByTeacher();
@@ -108,14 +106,11 @@ export class TeacherComponent {
     }
 
     getSubjectsByTeacher() {
-        console.log("getSUBJECT AJAX");
         this.getSubjectList(this.teacherID);
-        console.log("getSUBJECT");
         this.tableData = this.subjectList;
     }
 
     getTeachers2() {
-        console.log("getTeachers");
         this.tableData = this.teachers;
     }
 
@@ -163,7 +158,6 @@ export class TeacherComponent {
         this.studentList = [];
         this.studentsWithGradesList = [];
         this.studentsWithGradesAsSting = [];
-        console.log("RESET");
     }
 
     dodajOCeny(event, studentID) {
@@ -173,7 +167,6 @@ export class TeacherComponent {
 
         let pom = value.split(',');
         let grade = new Grade(studentID[0], this.curentSubjectID[0], pom, null, null);
-        console.log("GRADE        " + grade.toString())
         this._teacherService.addGradesToStudent(grade)
             .subscribe(
                 error => alert(error),
@@ -181,18 +174,4 @@ export class TeacherComponent {
         this.newGrades = '';
     }
 
-    /*      getSubject(){
-     this._teacherService.getSubjectsByTeacherId(this.subjectID)
-     .subscribe((data:Subject[])=> this.subjectList = data,
-     error => alert(error),
-     ()=>console.log("GET POSZEDL na sub list"))
-     }*/
-
-
-    /*    getLogedUser(){
-     this._authenticationService.getUser(this.user.login)
-     .subscribe((data:User)=>this.logedUser = data,
-     error => alert(error),
-     ()=>console.log("GET NA USERA OISZEDK"))
-     }*/
 }

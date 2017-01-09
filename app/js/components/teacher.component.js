@@ -1,4 +1,4 @@
-System.register(["../services/teacher.service.js", "../model/dziennik.js", "angular2/core", "../services/authentication.service.js"], function(exports_1, context_1) {
+System.register(["../services/teacher.service", "../model/dziennik", "angular2/core", "../services/authentication.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -60,13 +60,10 @@ System.register(["../services/teacher.service.js", "../model/dziennik.js", "angu
                         .subscribe(function (data) { return _this.subjectList = data; }, function (error) { return alert(error); }, function () { return console.log("LISTA PRZEDMIOTOW UZYTKOWNIKA"); });
                 };
                 TeacherComponent.prototype.getSubjectsByTeacher = function () {
-                    console.log("getSUBJECT AJAX");
                     this.getSubjectList(this.teacherID);
-                    console.log("getSUBJECT");
                     this.tableData = this.subjectList;
                 };
                 TeacherComponent.prototype.getTeachers2 = function () {
-                    console.log("getTeachers");
                     this.tableData = this.teachers;
                 };
                 TeacherComponent.prototype.getSubjectById = function (subjectID) {
@@ -105,14 +102,12 @@ System.register(["../services/teacher.service.js", "../model/dziennik.js", "angu
                     this.studentList = [];
                     this.studentsWithGradesList = [];
                     this.studentsWithGradesAsSting = [];
-                    console.log("RESET");
                 };
                 TeacherComponent.prototype.dodajOCeny = function (event, studentID) {
                     var target = event.target || event.srcElement || event.currentTarget;
                     var value = target.parentElement.firstElementChild.value;
                     var pom = value.split(',');
                     var grade = new dziennik_1.Grade(studentID[0], this.curentSubjectID[0], pom, null, null);
-                    console.log("GRADE        " + grade.toString());
                     this._teacherService.addGradesToStudent(grade)
                         .subscribe(function (error) { return alert(error); }, function () { return console.log("POST POSZEDL z ocenami"); });
                     this.newGrades = '';
@@ -120,7 +115,7 @@ System.register(["../services/teacher.service.js", "../model/dziennik.js", "angu
                 TeacherComponent = __decorate([
                     core_1.Component({
                         selector: 'teacher',
-                        template: "\n<table class=\"table\">\n  <tr>\n  <td>WITAJ {{currentUser.name}} ___ {{currentUser.surname}}</td>\n</tr>\n<tr *ngFor=\"#object of tableData\">\n{{object.id}}\n     <td>{{object.name}}</td>\n          <button (click)=\"getSubjectById([object.id])\">{{object.id}}</button>\n     <!--<td (click)=\"goToClassComponent()\" *ngFor=\"#class of subject.schoolClasses\"><div>{{class.name}}</div></td>-->\n\n</tr>\n<div *ngIf=\"[subject] != 0\">\n<H1>{{subject.name}}</H1>\n    <td *ngFor=\"#schoolClass of subject.schoolClasses\">\n            {{schoolClass.name}}\n            <button (click)=\"getStudentsWithGradesByClassId([schoolClass.id])\">{{schoolClass.id}}</button>\n    </td>\n</div>\n\n <div *ngIf=\"[studentsWithGradesList] != 0  && [studentsWithGradesAsSting].length > 0\">\n            <tr *ngFor=\"#student of studentsWithGradesAsSting\">\n            <H1>UCZEN : </H1>\n            <div *ngIf=\"[student] != 0\">\n            <tr><td> <span>IMIE:  </span> {{student.name}} </td><td>  <span>  NAZWISKO :</span> \t{{student.surname}}</td><span> OCENY  </span><td> <div [attr.id] = \"student.id\">  <input  [(ngModel)]=\"student.gradesAsString\" > <button (click)=\"dodajOCeny($event, [student.id])\" >Dodaj Oceny {{student.id}} a</button></div></td></tr>      \n                </div>\n     \n</div>\n\n\n  </table>\n  <button (click)=\"getSubjectsByTeacher()\"> PRZEDMIOTY</button>\n    <button (click)=\"getTeachers2()\"> Nauczyciele</button>\n    <button (click)=\"postTeacherek()\"> POST NAUCZYCIELA</button>\n\n",
+                        template: "\n<table class=\"table\">\n  <tr>\n  <td>WITAJ {{currentUser.name}} ___ {{currentUser.surname}}</td>\n</tr>\n<tr *ngFor=\"#object of tableData\">\n     <td>{{object.name}}</td>\n          <button (click)=\"getSubjectById([object.id])\">{{object.id}}</button>\n     <!--<td (click)=\"goToClassComponent()\" *ngFor=\"#class of subject.schoolClasses\"><div>{{class.name}}</div></td>-->\n\n</tr>\n<div *ngIf=\"[subject] != 0\">\n<H1>{{subject.name}}</H1>\n    <td *ngFor=\"#schoolClass of subject.schoolClasses\">\n            {{schoolClass.name}}\n            <button (click)=\"getStudentsWithGradesByClassId([schoolClass.id])\">{{schoolClass.id}}</button>\n    </td>\n</div>\n\n <div *ngIf=\"[studentsWithGradesList] != 0  && [studentsWithGradesAsSting].length > 0\">\n            <tr *ngFor=\"#student of studentsWithGradesAsSting\">\n            <H1>UCZEN : </H1>\n            <div *ngIf=\"[student] != 0\">\n            <tr><td> <span>IMIE:  </span> {{student.name}} </td><td>  <span>  NAZWISKO :</span> \t{{student.surname}}</td><span> OCENY  </span><td> <div [attr.id] = \"student.id\">  <input  [(ngModel)]=\"student.gradesAsString\" > <button (click)=\"dodajOCeny($event, [student.id])\" >Dodaj Oceny {{student.id}} a</button></div></td></tr>      \n                </div>\n     \n</div>\n\n\n  </table>\n  <button (click)=\"getSubjectsByTeacher()\"> PRZEDMIOTY</button>\n    <button (click)=\"getTeachers2()\"> Nauczyciele</button>\n    <button (click)=\"postTeacherek()\"> POST NAUCZYCIELA</button>\n\n",
                         providers: [teacher_service_1.TeacherService]
                     }), 
                     __metadata('design:paramtypes', [teacher_service_1.TeacherService, authentication_service_1.AuthenticationService])

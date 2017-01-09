@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxjs/Rx', 'rxjs/Observable', "angular2/src/http/base_request_options"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map", "rxjs/Rx", "rxjs/Observable", "angular2/src/http/base_request_options"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -48,33 +48,15 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                     return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
                         .map(function (res) { return res.json(); });
                 }; //leci po urlu
-                TeacherService.prototype.postTeacher = function () {
-                    var toAdd = JSON.stringify({
-                        address: "Rzeszow 2",
-                        login: "zzzz",
-                        name: "zzzz",
-                        password: "zzzz",
-                        surname: "zzzzz",
-                        isEducator: "true"
-                    });
-                    var headers = new http_1.Headers();
-                    headers.append('Content-Type', 'application/json');
-                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, { headers: headers })
-                        .catch(this.handleError);
-                };
                 TeacherService.prototype.addTeacher = function (teacher) {
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    /*
-                         var newTeacher = new URLSearchParams();
-                        newTeacher.set("name", teacher.name)
-                    */
                     return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', JSON.stringify(teacher), headers);
                 };
                 TeacherService.prototype.getSubjectById = function (id) {
                     return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject/' + id)
                         .map(function (res) { return res.json(); });
-                }; //leci po urlu
+                };
                 TeacherService.prototype.getSubjectsByTeacherId = function (teacherID) {
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("teacherID", teacherID);
@@ -103,12 +85,6 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/add/operator/map', 'rxj
                     headers.append('Content-Type', 'application/json');
                     return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, { headers: headers })
                         .catch(this.handleError);
-                };
-                // to avoid breaking the rest of our app
-                // I extract the id from the person url
-                TeacherService.prototype.extractId = function (personData) {
-                    var extractedId = personData.url.replace('http://swapi.co/api/people/', '').replace('/', '');
-                    return parseInt(extractedId);
                 };
                 TeacherService.prototype.handleError = function (error) {
                     console.error(error);

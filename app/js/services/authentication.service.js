@@ -39,23 +39,6 @@ System.register(["angular2/core", "angular2/router", "angular2/http"], function(
                     localStorage.removeItem("user");
                     this._router.navigate(['Login']);
                 };
-                AuthenticationService.prototype.login = function (user) {
-                    var authenticatedUser = this.getUser(user.login);
-                    console.log("SERWISE " + user.login);
-                    console.log("SUKCES");
-                    console.log("CURENT " + authenticatedUser.toString());
-                    if (authenticatedUser) {
-                        localStorage.setItem("user", authenticatedUser.toString());
-                        this._router.navigate(['Home']);
-                        return true;
-                    }
-                    return false;
-                };
-                AuthenticationService.prototype.checkCredentials = function () {
-                    if (localStorage.getItem("user.ts") === null) {
-                        this._router.navigate(['Login']);
-                    }
-                };
                 AuthenticationService.prototype.getUser = function (login) {
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("login", login);
