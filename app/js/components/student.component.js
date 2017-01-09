@@ -40,7 +40,7 @@ System.register(["angular2/core", "../services/authentication.service", "../serv
                 StudentComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n<table class=\"table\">\n  <tr>\n</tr>\n<h1>UCZENNN</h1>\n  </table>\n  <button (click)=\"getCard() \"> KARDKA</button>\n   <p>OCENY:</p>\n    <ul>\n      <li *ngFor=\"#subject of subjectWithGrades\">\n        <td>{{ subject.subjectName }}</td><td>{{ subject.valuesAssString}}</td>\n      </li>\n    </ul>\n\n",
+                        template: "\n<table class=\"table\">\n  <tr>\n</tr>\n<h1>UCZENNN</h1>\n  </table>\n  <button (click)=\"getCard() \"> KARTKA Z OCENAMI</button>\n     <ul>\n      <li *ngFor=\"#subject of subjectWithGrades\">\n        <td>{{ subject.subjectName }}</td><td>{{ subject.valuesAssString}}</td>\n      </li>\n    </ul>\n\n",
                         providers: [student_service_1.StudentService]
                     }), 
                     __metadata('design:paramtypes', [authentication_service_1.AuthenticationService, student_service_1.StudentService])
