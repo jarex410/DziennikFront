@@ -8,7 +8,7 @@ import {Router} from "angular2/src/router/router";
     template: `
         <div class="container" >
             <div class="title">
-                Welcome
+                WITAJ WODZU
             </div>
             <div class="panel-body">
                 <div class="row">
