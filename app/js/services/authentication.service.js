@@ -42,7 +42,7 @@ System.register(["angular2/core", "angular2/router", "angular2/http"], function(
                 AuthenticationService.prototype.getUser = function (login) {
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("login", login);
-                    return this.http.get('http://localhost:8080/user', { search: parametrers })
+                    return this.http.get('http://localhost:8080/dziennik/user', { search: parametrers })
                         .map(function (res) { return res.json(); });
                 };
                 AuthenticationService = __decorate([

@@ -26,14 +26,14 @@ export class TeacherService {
 
 
     getTechers(): Observable<Teacher[]> {
-        return this.http.get('http://localhost:8080/teacher')
+        return this.http.get('http://localhost:8080/dziennik/teacher')
             .map((response: Response) => <Teacher[]>response.json())
             .catch(this.handleError);
     }
 
     getTeacher(id: string) {
         let parametrers = new URLSearchParams();
-        return this.http.get('http://localhost:8080/teacher/' + id)
+        return this.http.get('http://localhost:8080/dziennik/teacher/' + id)
             .map(res => res.json());
     }  //leci po urlu
 
@@ -42,12 +42,12 @@ export class TeacherService {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return this.http.post(
-            'http://localhost:8080/teacher',
+            'http://localhost:8080/dziennik/teacher',
             JSON.stringify(teacher), headers);
     }
 
     getSubjectById(id: string) {
-        return this.http.get('http://localhost:8080/subject/' + id)
+        return this.http.get('http://localhost:8080/dziennik/subject/' + id)
             .map(res => res.json());
     }
 
@@ -55,7 +55,7 @@ export class TeacherService {
         let parametrers = new URLSearchParams();
         parametrers.set("teacherID", teacherID);
 
-        return this.http.get('http://localhost:8080/subject',
+        return this.http.get('http://localhost:8080/dziennik/subject',
             {search: parametrers})
             .map((response: Response) => <Subject[]>response.json())
             .catch(this.handleError);
@@ -65,7 +65,7 @@ export class TeacherService {
         let parametrers = new URLSearchParams();
         parametrers.set("classID", classID);
 
-        return this.http.get('http://localhost:8080/student',
+        return this.http.get('http://localhost:8080/dziennik/student',
             {search: parametrers})
             .map((response: Response) => <Student[]>response.json())
             .catch(this.handleError);
@@ -76,7 +76,7 @@ export class TeacherService {
         parametrers.set("classID", classID);
         parametrers.set("subjectID", subjectID)
 
-        return this.http.get('http://localhost:8080/teacher/grades',
+        return this.http.get('http://localhost:8080/dziennik/teacher/grades',
             {search: parametrers})
             .map((response: Response) => <Student[]>response.json())
             .catch(this.handleError);
@@ -88,7 +88,7 @@ export class TeacherService {
 
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.post(' http://localhost:8080/teacher/grades', toAdd, {headers: headers})
+        return this.http.post(' http://localhost:8080/dziennik/teacher/grades', toAdd, {headers: headers})
             .catch(this.handleError);
     }
 

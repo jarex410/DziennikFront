@@ -10,7 +10,7 @@ export class StudentService {
     }
 
     getCardByStudentID(id: string) {
-        return this.http.get('http://localhost:8080/student/card/' + id)
+        return this.http.get('http://localhost:8080/dziennik/student/card/' + id)
             .map(res => res.json());
     }
 

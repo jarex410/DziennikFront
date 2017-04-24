@@ -30,7 +30,7 @@ export class AuthenticationService {
         let parametrers = new URLSearchParams();
         parametrers.set("login", login);
 
-        return this.http.get('http://localhost:8080/user',
+        return this.http.get('http://localhost:8080/dziennik/user',
             {search: parametrers})
             .map(res => res.json());
     }
