@@ -26,14 +26,14 @@ export class TeacherService {
 
 
     getTechers(): Observable<Teacher[]> {
-        return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher')
+        return this.http.get('http://localhost:8080/teacher')
             .map((response: Response) => <Teacher[]>response.json())
             .catch(this.handleError);
     }
 
     getTeacher(id: string) {
         let parametrers = new URLSearchParams();
-        return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
+        return this.http.get('http://localhost:8080/teacher/' + id)
             .map(res => res.json());
     }  //leci po urlu
 
@@ -42,12 +42,12 @@ export class TeacherService {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return this.http.post(
-            'http://dziennikelektroniczny.herokuapp.com/teacher',
+            'http://localhost:8080/teacher',
             JSON.stringify(teacher), headers);
     }
 
     getSubjectById(id: string) {
-        return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject/' + id)
+        return this.http.get('http://localhost:8080/subject/' + id)
             .map(res => res.json());
     }
 
@@ -55,7 +55,7 @@ export class TeacherService {
         let parametrers = new URLSearchParams();
         parametrers.set("teacherID", teacherID);
 
-        return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject',
+        return this.http.get('http://localhost:8080/subject',
             {search: parametrers})
             .map((response: Response) => <Subject[]>response.json())
             .catch(this.handleError);
@@ -65,7 +65,7 @@ export class TeacherService {
         let parametrers = new URLSearchParams();
         parametrers.set("classID", classID);
 
-        return this.http.get('http://dziennikelektroniczny.herokuapp.com/student',
+        return this.http.get('http://localhost:8080/student',
             {search: parametrers})
             .map((response: Response) => <Student[]>response.json())
             .catch(this.handleError);
@@ -76,7 +76,7 @@ export class TeacherService {
         parametrers.set("classID", classID);
         parametrers.set("subjectID", subjectID)
 
-        return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/grades',
+        return this.http.get('http://localhost:8080/teacher/grades',
             {search: parametrers})
             .map((response: Response) => <Student[]>response.json())
             .catch(this.handleError);
@@ -88,8 +88,7 @@ export class TeacherService {
 
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
-
-        return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, {headers: headers})
+        return this.http.post(' http://localhost:8080/teacher/grades', toAdd, {headers: headers})
             .catch(this.handleError);
     }
 

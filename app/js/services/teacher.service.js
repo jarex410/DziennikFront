@@ -39,35 +39,35 @@ System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map", "rxj
                     this.options = new base_request_options_1.RequestOptions({ headers: this.headers });
                 }
                 TeacherService.prototype.getTechers = function () {
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher')
+                    return this.http.get('http://localhost:8080/teacher')
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
                 TeacherService.prototype.getTeacher = function (id) {
                     var parametrers = new http_1.URLSearchParams();
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/' + id)
+                    return this.http.get('http://localhost:8080/teacher/' + id)
                         .map(function (res) { return res.json(); });
                 }; //leci po urlu
                 TeacherService.prototype.addTeacher = function (teacher) {
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher', JSON.stringify(teacher), headers);
+                    return this.http.post('http://localhost:8080/teacher', JSON.stringify(teacher), headers);
                 };
                 TeacherService.prototype.getSubjectById = function (id) {
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject/' + id)
+                    return this.http.get('http://localhost:8080/subject/' + id)
                         .map(function (res) { return res.json(); });
                 };
                 TeacherService.prototype.getSubjectsByTeacherId = function (teacherID) {
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("teacherID", teacherID);
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/subject', { search: parametrers })
+                    return this.http.get('http://localhost:8080/subject', { search: parametrers })
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
                 TeacherService.prototype.getStudentsByClassId = function (classID) {
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("classID", classID);
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/student', { search: parametrers })
+                    return this.http.get('http://localhost:8080/student', { search: parametrers })
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
@@ -75,7 +75,7 @@ System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map", "rxj
                     var parametrers = new http_1.URLSearchParams();
                     parametrers.set("classID", classID);
                     parametrers.set("subjectID", subjectID);
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/teacher/grades', { search: parametrers })
+                    return this.http.get('http://localhost:8080/teacher/grades', { search: parametrers })
                         .map(function (response) { return response.json(); })
                         .catch(this.handleError);
                 };
@@ -83,7 +83,7 @@ System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map", "rxj
                     var toAdd = JSON.stringify(grades);
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    return this.http.post('http://dziennikelektroniczny.herokuapp.com/teacher/grades', toAdd, { headers: headers })
+                    return this.http.post(' http://localhost:8080/teacher/grades', toAdd, { headers: headers })
                         .catch(this.handleError);
                 };
                 TeacherService.prototype.handleError = function (error) {

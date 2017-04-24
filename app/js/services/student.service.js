@@ -26,7 +26,7 @@ System.register(["angular2/src/core/di/decorators", "angular2/src/http/http"], f
                     this.http = http;
                 }
                 StudentService.prototype.getCardByStudentID = function (id) {
-                    return this.http.get('http://dziennikelektroniczny.herokuapp.com/student/card/' + id)
+                    return this.http.get('http://localhost:8080/student/card/' + id)
                         .map(function (res) { return res.json(); });
                 };
                 StudentService = __decorate([
